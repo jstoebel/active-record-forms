@@ -4,17 +4,18 @@
     "description": "Connect your Ruby Active Record models to a boilerplate redux-form",
     "repository": {
         "type": "git",
-        "url": "https://github.com/juliancwirko/react-npm-boilerplate.git"
+        "url": "https://github.com/jstoebel/active-record-forms.git"
     },
     "author": "Jacob Stoebel",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/juliancwirko/react-npm-boilerplate/issues"
+        "url": "https://github.com/jstoebel/active-record-forms/issues"
     },
-    "homepage": "https://github.com/juliancwirko/react-npm-boilerplate",
+    "homepage": "https://github.com/jstoebel/active-record-forms",
     "keywords": [
         "react-component",
-        "react"
+        "react",
+        "redux-forms"
     ],
     "options": {
         "mocha": "--require scripts/mocha_runner src/**/__tests__/**/*.js"
