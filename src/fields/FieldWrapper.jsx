@@ -14,9 +14,10 @@
 
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
-import validatorIndex from '../validators'
-import TextField from './fields/TextField'
-import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap'
+import validatorIndex from '../validators/validators';
+import InputField from './InputField';
+import BooleanField from './BooleanField';
+import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 
 const renderField = ({id, 
                label, 
@@ -26,19 +27,54 @@ const renderField = ({id,
                meta,
                ...props }) => {
 
-  if (type == 'string') {
-    console.log(meta)
+  // text field for:
+  // string, integer, decimal, float, bigint, text
+  if (/decimal|float|integer|bigint|string|text/.test(type)) {
+
+    const fieldProps = Object.assign({}, 
+                                     {
+                                       id: input.name,
+                                       label: input.name,
+                                       meta: meta,
+                                     },
+                                     input
+
+
+    )
+
+    // add type attr depending on data type
+    if (type == 'string') {
+      fieldProps.type = (input.name.toLowerCase() == 'password' ? 'password' : 'text')
+    
+    } else if (type == 'text') {
+      fieldProps.componentClass = 'textarea'
+    } else {
+      // a number type
+    }
+
     return (
-      <TextField
+      <InputField {...fieldProps} />
+    )
+  } else if (type == 'integer') {
+    return (
+      <InputField
         id={input.name}
         label={input.name}
-        type={input.name.toLowerCase() == 'password' ? 'password' : 'text'}
+        type="number"
         meta={meta}
         {...input}
       >
-      </TextField>
+      </InputField>
     )
-  
+  } else if (type == 'boolean') {
+    return (
+        <BooleanField
+          meta={meta}
+          label={input.name}
+          {...input}
+        >
+        </BooleanField>
+    )
   } else {
     // not implemented
     return (
@@ -64,8 +100,9 @@ export default class FieldWrapper extends Component {
         //Additionally if they are a higher order function which receive props you should instantiate them when the component mounts / on instantiation.
 
         this.validators = this.props.validators.map((validator) => {
-            const validatorFunc = validatorIndex[validator.name]
-            return validatorFunc({message: "hey! don't leave that blank!"})
+          console.log(validator)  
+          const validatorFunc = validatorIndex[validator.name]
+          return validatorFunc({message: validator.options.message})
         })
     }
 

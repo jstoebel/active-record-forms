@@ -3,11 +3,11 @@ import React from 'react';
 import {FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap'
 import {getValidationState} from '../helpers'
 
-const TextField = ({ 
+const InputField = ({ 
                     id, 
-                    label, 
-                    help,
+                    label,
                     meta,
+                    styles,
                     ...props }) => {
 
   return (
@@ -17,10 +17,10 @@ const TextField = ({
     >
       <ControlLabel>{label}</ControlLabel>
       <FormControl {...props} />
+      {meta.touched && (meta.error || meta.warning) && <HelpBlock>{meta.error || meta.warning}</HelpBlock>}
       
-      {help && <HelpBlock>{help}</HelpBlock>}
     </FormGroup>
   );
 }
 
-export default TextField
+export default InputField
